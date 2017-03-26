@@ -54,8 +54,9 @@ var activityCommandDelegate:CDVCommandDelegate?;
     override open func pluginInitialize() {
         super.pluginInitialize();
 
-        locationManager.requestLocationPermissions();
-        self.promptForNotificationPermission();
+        // JVI: Too many permission requests...
+        //locationManager.requestLocationPermissions();
+        //self.promptForNotificationPermission();
 
         NotificationCenter.default.addObserver(
             self,
