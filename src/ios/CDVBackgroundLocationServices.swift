@@ -54,8 +54,8 @@ var activityCommandDelegate:CDVCommandDelegate?;
     override open func pluginInitialize() {
         super.pluginInitialize();
 
-        locationManager.requestLocationPermissions();
-        self.promptForNotificationPermission();
+        //locationManager.requestLocationPermissions();
+        //self.promptForNotificationPermission();
 
         NotificationCenter.default.addObserver(
             self,
@@ -129,10 +129,10 @@ var activityCommandDelegate:CDVCommandDelegate?;
 
         log(message: "Are we in the background? \(background)");
 
-        if(background) {
+        // JVI if(background) {
             locationManager.startUpdating(force: false);
             activityManager.startDetection();
-        }
+        // JVI }
 
         let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
         commandDelegate!.send(pluginResult, callbackId:command.callbackId)
@@ -179,10 +179,10 @@ var activityCommandDelegate:CDVCommandDelegate?;
     func onResume() {
         log(message: "App Resumed");
         background = false;
-
-        taskManager.endAllBackgroundTasks();
-        locationManager.stopUpdating();
-        activityManager.stopDetection();
+//JVI
+//        taskManager.endAllBackgroundTasks();
+//        locationManager.stopUpdating();
+//        activityManager.stopDetection();
     }
 
     func onSuspend() {
@@ -190,8 +190,8 @@ var activityCommandDelegate:CDVCommandDelegate?;
         background = true;
 
         if(enabled) {
-            locationManager.startUpdating(force: true);
-            activityManager.startDetection();
+//            locationManager.startUpdating(force: true);
+//            activityManager.startDetection();
         }
     }
 
@@ -200,8 +200,8 @@ var activityCommandDelegate:CDVCommandDelegate?;
         background = true;
 
         if(enabled) {
-            locationManager.startUpdating(force: false);
-            activityManager.startDetection();
+//            locationManager.startUpdating(force: false);
+//            activityManager.startDetection();
         }
     }
 
