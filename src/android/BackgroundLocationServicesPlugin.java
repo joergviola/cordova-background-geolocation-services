@@ -210,6 +210,7 @@ public class BackgroundLocationServicesPlugin extends CordovaPlugin {
             if (hasPermisssion()) {
                 isServiceBound = bindServiceToWebview(activity, updateServiceIntent);
                 isEnabled = true;
+                activity.sendBroadcast(new Intent(Constants.START_RECORDING));
                 callbackContext.success();
             } else {
                 startCallback = callbackContext;
@@ -327,27 +328,27 @@ public class BackgroundLocationServicesPlugin extends CordovaPlugin {
       return didUnbind;
     }
 
-    @Override
-    public void onPause(boolean multitasking) {
-        if(debug()) {
-            Log.d(TAG, "- locationUpdateReceiver Paused (starting recording = " + String.valueOf(isEnabled) + ")");
-        }
-        if (isEnabled) {
-            Activity activity = this.cordova.getActivity();
-            activity.sendBroadcast(new Intent(Constants.START_RECORDING));
-        }
-    }
-
-    @Override
-    public void onResume(boolean multitasking) {
-        if(debug()) {
-            Log.d(TAG, "- locationUpdateReceiver Resumed (stopping recording)" + String.valueOf(isEnabled));
-        }
-        if (isEnabled) {
-            Activity activity = this.cordova.getActivity();
-            activity.sendBroadcast(new Intent(Constants.STOP_RECORDING));
-        }
-    }
+//    @Override
+//    public void onPause(boolean multitasking) {
+//        if(debug()) {
+//            Log.d(TAG, "- locationUpdateReceiver Paused (starting recording = " + String.valueOf(isEnabled) + ")");
+//        }
+//        if (isEnabled) {
+//            Activity activity = this.cordova.getActivity();
+//            activity.sendBroadcast(new Intent(Constants.START_RECORDING));
+//        }
+//    }
+//
+//    @Override
+//    public void onResume(boolean multitasking) {
+//        if(debug()) {
+//            Log.d(TAG, "- locationUpdateReceiver Resumed (stopping recording)" + String.valueOf(isEnabled));
+//        }
+//        if (isEnabled) {
+//            Activity activity = this.cordova.getActivity();
+//            activity.sendBroadcast(new Intent(Constants.STOP_RECORDING));
+//        }
+//    }
 
 
     private void destroyLocationUpdateReceiver() {
@@ -407,6 +408,8 @@ public class BackgroundLocationServicesPlugin extends CordovaPlugin {
             case START_REQ_CODE:
                 isServiceBound = bindServiceToWebview(cordova.getActivity(), updateServiceIntent);
                 isEnabled = true;
+                Activity activity = this.cordova.getActivity();
+                activity.sendBroadcast(new Intent(Constants.START_RECORDING));
                 break;
         }
     }
